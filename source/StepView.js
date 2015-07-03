@@ -5,28 +5,56 @@ var hour = minute * 60;
 enyo.kind({
 	name: "sous.StepView",
 	kind: "onyx.Item",
-	layoutKind: "FittableColumnsLayout",
 
 	published:{
 		step: null,
-		done: false
+		done: false,
+		editing: false
 	},
 
 	bindings: [
 		{from: ".step.description", to: ".$.description.content"},
+		{from: ".step.description", to: ".$.descriptionInput.value", oneWay: false},
 		{from: ".done", to: ".$.checkbox.checked", oneWay: false},
+
 		{from: ".step.cookTime", to: ".$.timer.duration"},
-		{from: ".step.description", to: ".$.timer.title"}
+		{from: ".step.cookTime", to: ".$.cookTimeInput.duration", oneWay: false},
+
+		{from: ".step.description", to: ".$.timer.title"},
+
+		{from: ".editing", to: ".$.editDrawer.open"},
+		{from: ".editing", to: ".$.descriptionInputDecorator.showing"},
+		{from: ".editing", to: ".$.description.showing", kind: "enyo.InvertBooleanBinding"}
+
 	],
 
 	components:[
-		{name: "checkbox", kind: "onyx.Checkbox"},
-		{name: "description", fit: true},
-		{kind: "sous.Timer", name: "timer"},
-		{name: "startButton", kind: "onyx.Button", content: "Start", ontap: "start"}
+		{kind: "FittableColumns", classes:"align-middle", components:[
+			{name: "checkbox", kind: "onyx.Checkbox"},
+			{name: "description", onhold: "startEditing", fit: true},
+			{name: "descriptionInputDecorator", kind: "onyx.InputDecorator", layoutKind: "FittableColumnsLayout", fit: true, components:[
+				{name: "descriptionInput", kind: "onyx.Input", fit: true}
+			]},
+			{kind: "sous.Timer", name: "timer"},
+			{name: "startButton", kind: "onyx.Button", content: "Start", ontap: "start"}
+		]},
+		{name: "editDrawer", kind: "enyo.Drawer", components:[
+			{kind: "onyx.InputDecorator", components:[
+				{name: "cookTimeInput", kind: "sous.DurationInput"}
+			]},
+			{kind: "onyx.Button", content: "Done", classes:"onyx-blue", ontap: "doneEditing"}
+		]}
 	],
 
 	start: function() {
 		this.$.timer.set("startTime", new Date());
+	},
+
+	startEditing: function() {
+		this.set("editing", true);
+	},
+
+	doneEditing: function() {
+		this.set("editing", false);
 	}
 });

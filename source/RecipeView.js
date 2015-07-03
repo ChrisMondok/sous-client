@@ -18,7 +18,7 @@ enyo.kind({
 			{kind: "enyo.DataRepeater", name: "steps", components:[
 				{kind: "sous.StepView", bindings: [ {from: ".model", to: ".step"} ]}
 			]},
-			{kind: "onyx.Item", content: "Add Step"}
+			{kind: "onyx.Item", content: "Add Step", ontap: "addStep"}
 		]},
 
 		{kind: "onyx.Toolbar", layoutKind: "enyo.FittableColumnsLayout", components:[
@@ -36,6 +36,10 @@ enyo.kind({
 
 	goBack: function() {
 		history.back();
+	},
+
+	addStep: function() {
+		this.get("recipe.steps").add(new sous.Step());
 	},
 
 	deleteRecipe: function() {

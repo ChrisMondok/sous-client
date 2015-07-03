@@ -11,6 +11,7 @@ enyo.depends(
 	"StepView.js",
 	"CookBook.js",
 	"CookBookView.js",
+	"DurationInput.js",
 	"Timer.js",
 	// View kind definitions
 	"views",
