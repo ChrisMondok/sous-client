@@ -8,8 +8,10 @@ enyo.depends(
 
 	"Recipe.js",
 	"RecipeView.js",
+	"StepView.js",
 	"CookBook.js",
 	"CookBookView.js",
+	"Timer.js",
 	// View kind definitions
 	"views",
 	// Include our default entry point

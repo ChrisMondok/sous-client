@@ -1,9 +1,3 @@
-/**
-	Define and instantiate your enyo.Application kind in this file.  Note,
-	application rendering should be deferred until DOM is ready by wrapping
-	it in a call to enyo.ready().
-*/
-
 enyo.kind({
 	name: "sous.Application",
 	kind: "enyo.Application",
@@ -16,6 +10,11 @@ enyo.kind({
 			{path: "recipes/:id", handler: "showRecipe", context: "owner"}
 		]}
 	],
+
+	constructor: function() {
+		this.inherited(arguments);
+		Notification.requestPermission();
+	},
 
 	showCookbook: function() {
 		this.changeView(new sous.CookBookView());
@@ -36,6 +35,10 @@ enyo.kind({
 			this.view.destroy();
 		this.set('view', newView);
 		this.render();
+	},
+
+	showNotification: function(title, body) {
+		return new Notification(title, {body: body || ""});
 	}
 });
 

@@ -3,7 +3,8 @@ enyo.kind({
 	kind: "enyo.FittableRows",
 
 	bindings: [
-		{from: ".recipe.name", to: ".$.name.value"}
+		{from: ".recipe.name", to: ".$.name.value"},
+		{from: ".recipe.steps", to: ".$.steps.collection"}
 	],
 
 	components: [
@@ -14,7 +15,10 @@ enyo.kind({
 		]},
 
 		{kind: "enyo.Scroller", fit: true, components:[
-			{content: "Here is where the steps would go."}
+			{kind: "enyo.DataRepeater", name: "steps", components:[
+				{kind: "sous.StepView", bindings: [ {from: ".model", to: ".step"} ]}
+			]},
+			{kind: "onyx.Item", content: "Add Step"}
 		]},
 
 		{kind: "onyx.Toolbar", layoutKind: "enyo.FittableColumnsLayout", components:[
@@ -35,7 +39,10 @@ enyo.kind({
 	},
 
 	deleteRecipe: function() {
-		if(confirm("Delete recipe? It will be lost forever."))
+		if(confirm("Delete recipe? It will be lost forever.")) {
 			this.recipe.destroy({commit: true});
+			this.goBack();
+		}
 	}
 });
+
