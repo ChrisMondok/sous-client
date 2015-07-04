@@ -24,8 +24,10 @@ enyo.kind({
 
 		{from: ".editing", to: ".$.editDrawer.open"},
 		{from: ".editing", to: ".$.descriptionInputDecorator.showing"},
-		{from: ".editing", to: ".$.description.showing", kind: "enyo.InvertBooleanBinding"}
+		{from: ".editing", to: ".$.description.showing", kind: "enyo.InvertBooleanBinding"},
 
+		{from: ".$.timer.startTime", to: ".$.startButton.showing", kind: "enyo.InvertBooleanBinding"},
+		{from: ".$.timer.startTime", to: ".$.resetButton.showing", kind: "enyo.BooleanBinding"}
 	],
 
 	components:[
@@ -36,7 +38,8 @@ enyo.kind({
 				{name: "descriptionInput", kind: "onyx.Input", fit: true}
 			]},
 			{kind: "sous.Timer", name: "timer"},
-			{name: "startButton", kind: "onyx.Button", content: "Start", ontap: "start"}
+			{name: "startButton", kind: "onyx.Button", content: "Start", ontap: "start"},
+			{name: "resetButton", kind: "onyx.Button", content: "Reset", ontap: "resetTimer"}
 		]},
 		{name: "editDrawer", kind: "enyo.Drawer", components:[
 			{kind: "onyx.InputDecorator", components:[
@@ -48,6 +51,10 @@ enyo.kind({
 
 	start: function() {
 		this.$.timer.set("startTime", new Date());
+	},
+
+	resetTimer: function() {
+		this.$.timer.set("startTime", null);
 	},
 
 	startEditing: function() {
