@@ -5,7 +5,8 @@ enyo.kind({
 
 	components:[
 		{kind: "Router", useHistory: true, triggerOnStart: true, routes:[
-			{path: "cookbook", handler: "showCookbook", context: "owner", "default": true},
+			{path: "login", handler: "showLogin", context: "owner", "default": true},
+			{path: "cookbook", handler: "showCookbook", context: "owner"},
 			{path: "recipes", handler: "newRecipe", context: "owner"},
 			{path: "recipes/:id", handler: "showRecipe", context: "owner"}
 		]}
@@ -14,6 +15,10 @@ enyo.kind({
 	constructor: function() {
 		this.inherited(arguments);
 		Notification.requestPermission();
+	},
+
+	showLogin: function() {
+		this.changeView(new sous.AuthenticationView());
 	},
 
 	showCookbook: function() {

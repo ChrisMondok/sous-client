@@ -6,6 +6,7 @@ enyo.depends(
 	// CSS/LESS style files
 	"style",
 
+	"Authentication.js",
 	"Recipe.js",
 	"RecipeView.js",
 	"StepView.js",
