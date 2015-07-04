@@ -49,6 +49,13 @@ enyo.kind({
 			this.tickInterval = setInterval(this.tick.bind(this), 1000);
 			this.notifyTimeout = setTimeout(this.showNotification.bind(this), this.get("timeRemaining"));
 		}
+	},
+
+	destroy: function() {
+		if(this.tickInterval)
+			clearInterval(this.tickInterval);
+		if(this.notifyTimeout)
+			clearTimeout(this.notifyTimeout);
 	}
 });
 
