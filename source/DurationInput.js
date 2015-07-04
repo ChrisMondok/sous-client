@@ -27,9 +27,13 @@ enyo.kind({
 
 	parseDuration: function(value, binding) {
 		var self = this;
+
+		if(!value)
+			return yep(null);
+
 		var parts = value.toString().split(':');
 
-		if(parts.any(function(p) {return p.length == 0}))
+		if(parts.any(function(p) {return !p.length;}))
 			return nope();
 
 		if(parts.length > 3)
