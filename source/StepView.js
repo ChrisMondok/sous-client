@@ -42,11 +42,17 @@ enyo.kind({
 			{name: "resetButton", kind: "onyx.Button", content: "Reset", ontap: "resetTimer"}
 		]},
 		{name: "editDrawer", kind: "enyo.Drawer", components:[
-			{kind: "onyx.InputDecorator", components:[
-				{name: "cookTimeInput", kind: "sous.DurationInput"}
-			]},
-			{kind: "onyx.Button", content: "Done", classes:"onyx-blue", ontap: "doneEditing"}
+			{kind: "enyo.FittableRows", components:[
+				{kind: "onyx.InputDecorator", components:[
+					{name: "cookTimeInput", kind: "sous.DurationInput"}
+				]},
+				{kind: "enyo.FittableColumns", components:[
+					{kind: "onyx.Button", content: "Delete", classes: "onyx-negative", ontap: "deleteStep"},
+					{kind: "onyx.Button", content: "Done", classes:"onyx-blue", ontap: "doneEditing"}
+				]}
+			]}
 		]}
+			
 	],
 
 	start: function() {
@@ -55,6 +61,16 @@ enyo.kind({
 
 	resetTimer: function() {
 		this.$.timer.set("startTime", null);
+	},
+
+	stepChanged: function(was, step) {
+		if(step && !step.get('description'))
+			this.startEditing();
+	},
+
+	deleteStep: function() {
+		if(confirm("Delete step?"))
+			this.get("step").destroy();
 	},
 
 	startEditing: function() {
