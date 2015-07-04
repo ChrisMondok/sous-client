@@ -21,6 +21,10 @@ enyo.kind({
 		}
 	},
 
+	validChanged: function(was, valid) {
+		this.addRemoveClass("invalid", !valid);
+	},
+
 	parseDuration: function(value, binding) {
 		var self = this;
 		var parts = value.toString().split(':');
